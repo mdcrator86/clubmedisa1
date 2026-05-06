@@ -5,28 +5,234 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panache Villa V1 — Board Dashboard</title>
 <style>
+/* ══ BASE THEME (Dark — default) ══ */
 :root {
-  --bg: #070d1a;
-  --card: #0f1829;
-  --card2: #131e30;
-  --border: #1e2d45;
-  --gold: #c9a84c;
-  --gold-light: #e2c56c;
-  --blue: #3b82f6;
-  --green: #10b981;
-  --red: #ef4444;
-  --purple: #8b5cf6;
-  --teal: #06b6d4;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --white: #ffffff;
+  --bg: #070d1a; --card: #0f1829; --card2: #131e30; --border: #1e2d45;
+  --gold: #c9a84c; --gold-light: #e2c56c;
+  --blue: #3b82f6; --green: #10b981; --red: #ef4444;
+  --purple: #8b5cf6; --teal: #06b6d4;
+  --text: #e2e8f0; --muted: #64748b; --white: #ffffff;
+  --header-bg: linear-gradient(135deg,#0a1628 0%,#0f2040 50%,#0a1628 100%);
+  --nav-bg: #080e1c;
 }
+
+/* helper mixin applied by JS — light surface tweaks */
+body.is-light .kpi-card      { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+body.is-light .chart-card    { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+body.is-light thead th       { color: #4a5568; }
+body.is-light .bar-track     { background: rgba(0,0,0,0.07); }
+body.is-light .tbl-wrap      { border-color: var(--border); }
+body.is-light table          { background: var(--card); }
+body.is-light .summary-box   { background: var(--card2); }
+body.is-light .year-tab:hover{ background: rgba(0,0,0,0.06); }
+
+/* ── 1. Dark (Deep Navy) ── */
+body.t-dark {
+  --bg:#070d1a; --card:#0f1829; --card2:#131e30; --border:#1e2d45;
+  --text:#e2e8f0; --muted:#64748b; --white:#ffffff;
+  --header-bg:linear-gradient(135deg,#0a1628 0%,#0f2040 50%,#0a1628 100%);
+  --nav-bg:#080e1c;
+}
+
+/* ── 2. Midnight Black ── */
+body.t-midnight {
+  --bg:#0a0a0a; --card:#141414; --card2:#1a1a1a; --border:#2a2a2a;
+  --text:#e8e8e8; --muted:#666; --white:#fff;
+  --header-bg:linear-gradient(135deg,#0a0a0a 0%,#1a1208 100%);
+  --nav-bg:#080808;
+}
+
+/* ── 3. Deep Purple ── */
+body.t-purple {
+  --bg:#0d0820; --card:#160e30; --card2:#1c1238; --border:#2e1f5a;
+  --text:#e8e0ff; --muted:#7c6faa; --white:#fff;
+  --gold:#c084fc; --gold-light:#d8b4fe;
+  --header-bg:linear-gradient(135deg,#0d0820 0%,#1e1060 100%);
+  --nav-bg:#0a061a;
+}
+body.t-purple .villa-logo { background:linear-gradient(135deg,#7c3aed,#4c1d95); box-shadow:0 0 16px rgba(124,58,237,0.4); }
+body.t-purple .board-badge { background:rgba(192,132,252,0.12); border-color:rgba(192,132,252,0.35); color:#c084fc; }
+body.t-purple .kpi-card::after { background:var(--gold); }
+body.t-purple tfoot td { background:rgba(192,132,252,0.08); border-top-color:rgba(192,132,252,0.3); color:#c084fc; }
+body.t-purple .insight-card { background:rgba(192,132,252,0.05); border-color:rgba(192,132,252,0.2); }
+body.t-purple .insight-card h4 { color:#c084fc; }
+body.t-purple .summary-row:last-child span { color:#c084fc; }
+
+/* ── 4. Ocean Dark ── */
+body.t-ocean {
+  --bg:#071520; --card:#0c2030; --card2:#102838; --border:#1a3a50;
+  --text:#d0eeff; --muted:#5a8aaa; --white:#fff;
+  --gold:#06b6d4; --gold-light:#22d3ee;
+  --header-bg:linear-gradient(135deg,#071520 0%,#0a3050 100%);
+  --nav-bg:#050f18;
+}
+body.t-ocean .villa-logo { background:linear-gradient(135deg,#0891b2,#164e63); box-shadow:0 0 16px rgba(6,182,212,0.35); }
+body.t-ocean .board-badge { background:rgba(6,182,212,0.12); border-color:rgba(6,182,212,0.35); color:#06b6d4; }
+body.t-ocean tfoot td { background:rgba(6,182,212,0.08); border-top-color:rgba(6,182,212,0.3); color:#22d3ee; }
+body.t-ocean .insight-card { background:rgba(6,182,212,0.05); border-color:rgba(6,182,212,0.2); }
+body.t-ocean .insight-card h4 { color:#22d3ee; }
+body.t-ocean .summary-row:last-child span { color:#22d3ee; }
+
+/* ── 5. Charcoal ── */
+body.t-charcoal {
+  --bg:#1a1612; --card:#252018; --card2:#2e2820; --border:#3d3530;
+  --text:#f0ebe4; --muted:#8a7a6a; --white:#fff;
+  --gold:#f59e0b; --gold-light:#fbbf24;
+  --header-bg:linear-gradient(135deg,#1a1612 0%,#302515 100%);
+  --nav-bg:#120f0a;
+}
+body.t-charcoal .villa-logo { background:linear-gradient(135deg,#d97706,#78350f); box-shadow:0 0 16px rgba(245,158,11,0.3); }
+body.t-charcoal .board-badge { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.35); color:#f59e0b; }
+body.t-charcoal tfoot td { background:rgba(245,158,11,0.08); border-top-color:rgba(245,158,11,0.3); color:#f59e0b; }
+body.t-charcoal .insight-card h4 { color:#f59e0b; }
+body.t-charcoal .summary-row:last-child span { color:#f59e0b; }
+
+/* ── 6. Clean White ── */
+body.t-white {
+  --bg:#ffffff; --card:#f9fafb; --card2:#f3f4f6; --border:#e5e7eb;
+  --text:#111827; --muted:#6b7280; --white:#111827;
+  --header-bg:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);
+  --nav-bg:#f3f4f6;
+}
+
+/* ── 7. Day (Light Blue) ── */
+body.t-day {
+  --bg:#f0f4f8; --card:#ffffff; --card2:#f7f9fc; --border:#dce5ef;
+  --text:#1a2a3a; --muted:#6b7a8d; --white:#1a2a3a;
+  --header-bg:linear-gradient(135deg,#1a3c5e 0%,#2d6a9f 100%);
+  --nav-bg:#e8f0f8;
+}
+
+/* ── 8. Warm Cream ── */
+body.t-cream {
+  --bg:#faf7f0; --card:#fff8ee; --card2:#fdf3e0; --border:#e8d8c0;
+  --text:#3d2a14; --muted:#8a7060; --white:#3d2a14;
+  --gold:#b45309; --gold-light:#d97706;
+  --header-bg:linear-gradient(135deg,#78350f 0%,#b45309 100%);
+  --nav-bg:#f5ede0;
+}
+body.t-cream .board-badge { color:#b45309; border-color:rgba(180,83,9,0.35); background:rgba(180,83,9,0.08); }
+body.t-cream .section-header h2 { color:#3d2a14; }
+body.t-cream tfoot td { color:#b45309; background:rgba(180,83,9,0.07); border-top-color:rgba(180,83,9,0.25); }
+body.t-cream .insight-card h4 { color:#b45309; }
+body.t-cream .summary-row:last-child span { color:#b45309; }
+
+/* ── 9. Sage Light ── */
+body.t-sage {
+  --bg:#f0f4f0; --card:#ffffff; --card2:#f2f7f2; --border:#ccd8cc;
+  --text:#1a3020; --muted:#608060; --white:#1a3020;
+  --gold:#059669; --gold-light:#10b981;
+  --header-bg:linear-gradient(135deg,#14532d 0%,#166534 100%);
+  --nav-bg:#e4efe4;
+}
+body.t-sage .board-badge { color:#059669; border-color:rgba(5,150,105,0.35); background:rgba(5,150,105,0.08); }
+body.t-sage tfoot td { color:#059669; background:rgba(5,150,105,0.07); border-top-color:rgba(5,150,105,0.25); }
+body.t-sage .insight-card { background:rgba(5,150,105,0.05); border-color:rgba(5,150,105,0.2); }
+body.t-sage .insight-card h4 { color:#059669; }
+body.t-sage .summary-row:last-child span { color:#059669; }
+
+/* ── 10. Executive Red ── */
+body.t-red {
+  --bg:#0f0608; --card:#1a0a0c; --card2:#220d10; --border:#3d1520;
+  --text:#ffe8ea; --muted:#8a5060; --white:#fff;
+  --gold:#f43f5e; --gold-light:#fb7185;
+  --header-bg:linear-gradient(135deg,#0f0608 0%,#4c0519 100%);
+  --nav-bg:#0a0406;
+}
+body.t-red .villa-logo { background:linear-gradient(135deg,#be123c,#881337); box-shadow:0 0 16px rgba(244,63,94,0.35); }
+body.t-red .board-badge { background:rgba(244,63,94,0.12); border-color:rgba(244,63,94,0.35); color:#f43f5e; }
+body.t-red tfoot td { background:rgba(244,63,94,0.08); border-top-color:rgba(244,63,94,0.3); color:#f43f5e; }
+body.t-red .insight-card { background:rgba(244,63,94,0.05); border-color:rgba(244,63,94,0.2); }
+body.t-red .insight-card h4 { color:#f43f5e; }
+body.t-red .summary-row:last-child span { color:#f43f5e; }
+body.t-red .kpi-card::after { background:var(--gold); }
+
+/* ── 11. Amber Gold ── */
+body.t-amber {
+  --bg:#0f0a02; --card:#1a1205; --card2:#221808; --border:#3d2e10;
+  --text:#fff8e8; --muted:#8a7040; --white:#fff;
+  --gold:#f59e0b; --gold-light:#fbbf24;
+  --header-bg:linear-gradient(135deg,#0f0a02 0%,#451a03 100%);
+  --nav-bg:#0a0700;
+}
+body.t-amber .villa-logo { background:linear-gradient(135deg,#d97706,#92400e); box-shadow:0 0 20px rgba(245,158,11,0.4); }
+body.t-amber .board-badge { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.4); color:#f59e0b; }
+body.t-amber tfoot td { background:rgba(245,158,11,0.08); border-top-color:rgba(245,158,11,0.3); color:#f59e0b; }
+body.t-amber .insight-card h4 { color:#f59e0b; }
+body.t-amber .summary-row:last-child span { color:#f59e0b; }
+
+/* ── 12. Emerald ── */
+body.t-emerald {
+  --bg:#020f0a; --card:#05180f; --card2:#072014; --border:#0f3d22;
+  --text:#e0fff0; --muted:#3a8a5a; --white:#fff;
+  --gold:#10b981; --gold-light:#34d399;
+  --header-bg:linear-gradient(135deg,#020f0a 0%,#064e3b 100%);
+  --nav-bg:#010a06;
+}
+body.t-emerald .villa-logo { background:linear-gradient(135deg,#059669,#064e3b); box-shadow:0 0 20px rgba(16,185,129,0.4); }
+body.t-emerald .board-badge { background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.4); color:#10b981; }
+body.t-emerald tfoot td { background:rgba(16,185,129,0.08); border-top-color:rgba(16,185,129,0.3); color:#10b981; }
+body.t-emerald .insight-card { background:rgba(16,185,129,0.05); border-color:rgba(16,185,129,0.2); }
+body.t-emerald .insight-card h4 { color:#10b981; }
+body.t-emerald .summary-row:last-child span { color:#10b981; }
+body.t-emerald .kpi-card::after { background:var(--gold); }
+
+/* ── 13. Moderate (Slate) ── */
+body.t-moderate {
+  --bg:#111827; --card:#1f2937; --card2:#243040; --border:#374151;
+  --text:#f3f4f6; --muted:#9ca3af; --white:#ffffff;
+  --header-bg:linear-gradient(135deg,#111827 0%,#1e3a5f 100%);
+  --nav-bg:#0f1623;
+}
+body.t-moderate thead th { background:#1a2535; }
+
+/* light-mode common helpers */
+body.t-white,body.t-day,body.t-cream,body.t-sage { }
+body.t-white .kpi-card,body.t-day .kpi-card,body.t-cream .kpi-card,body.t-sage .kpi-card { box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+body.t-white thead th,body.t-day thead th,body.t-cream thead th,body.t-sage thead th { background:var(--card2); color:var(--muted); }
+body.t-white .bar-track,body.t-day .bar-track,body.t-cream .bar-track,body.t-sage .bar-track { background:rgba(0,0,0,0.07); }
+body.t-white table,body.t-day table,body.t-cream table,body.t-sage table { background:var(--card); }
+body.t-white .chart-card,body.t-day .chart-card,body.t-cream .chart-card,body.t-sage .chart-card { box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+body.t-white .section-header h2,body.t-day .section-header h2,body.t-cream .section-header h2,body.t-sage .section-header h2 { color:var(--text); }
+
+/* ── Theme Picker Panel ── */
+.theme-toggle-btn {
+  background: rgba(255,255,255,0.1); color: var(--text);
+  border: 1px solid var(--border); padding: 7px 16px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
+  transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 6px;
+}
+.theme-toggle-btn:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+.theme-panel-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+}
+.theme-panel-overlay.open { display: flex; align-items: flex-start; justify-content: flex-end; padding: 80px 24px 0; }
+.theme-panel {
+  background: #0f1829; border: 1px solid #1e2d45;
+  border-radius: 16px; padding: 20px 22px; width: 320px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.theme-panel-title { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
+.theme-group-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 8px; }
+.theme-swatches { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.swatch {
+  width: 100%; aspect-ratio: 1; border-radius: 10px; cursor: pointer;
+  border: 2px solid transparent; transition: all 0.2s; position: relative;
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px;
+  overflow: hidden;
+}
+.swatch:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.4); }
+.swatch.active { border-color: #c9a84c; box-shadow: 0 0 12px rgba(201,168,76,0.5); }
+.swatch-label { font-size: 8.5px; font-weight: 700; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.8); text-align: center; line-height: 1.2; }
+.swatch-check { position: absolute; top: 4px; right: 4px; font-size: 11px; display: none; }
+.swatch.active .swatch-check { display: block; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
 /* ── Header ── */
 .dashboard-header {
-  background: linear-gradient(135deg, #0a1628 0%, #0f2040 50%, #0a1628 100%);
+  background: var(--header-bg);
   border-bottom: 1px solid var(--border);
   padding: 0 32px;
   display: flex; align-items: center; justify-content: space-between;
@@ -48,16 +254,17 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
   background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35);
   color: var(--gold); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
 }
-.print-btn {
-  background: var(--gold); color: #0a0f1a; border: none; padding: 8px 18px;
-  border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 700;
-  transition: all 0.2s; letter-spacing: 0.3px;
+.theme-btn {
+  background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border);
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
+  transition: all 0.2s; font-family: inherit; white-space: nowrap;
 }
-.print-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+.theme-btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+.theme-btn.active-theme { background: var(--gold); color: #0a0f1a; border-color: var(--gold); }
 
 /* ── Year Nav ── */
 .year-nav {
-  background: #080e1c; border-bottom: 1px solid var(--border);
+  background: var(--nav-bg); border-bottom: 1px solid var(--border);
   padding: 0 32px; display: flex; align-items: center; gap: 6px; height: 52px;
   position: sticky; top: 72px; z-index: 99;
 }
@@ -248,7 +455,7 @@ td.hi { color: var(--gold); font-weight: 700; }
   </div>
   <div class="header-right">
     <div class="board-badge">📊 Board of Directors — Confidential</div>
-    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
+    <button class="theme-toggle-btn" onclick="toggleThemePanel()">🎨 Themes</button>
   </div>
 </div>
 
@@ -903,19 +1110,17 @@ td.hi { color: var(--gold); font-weight: 700; }
       <div class="kpi-sub">After all outflows</div>
       <div class="kpi-trend trend-up">✅ Positive net cash position</div>
     </div>
-    <div class="kpi-card c-red">
-      <span class="kpi-icon">⚠️</span>
-      <div class="kpi-label">FY 24-25 Outstanding</div>
-      <div class="kpi-value">₹73,408</div>
-      <div class="kpi-sub">Due ₹29.24 L · Received ₹28.51 L</div>
-      <div class="kpi-trend trend-down">Verify with RFTPM</div>
+    <div class="kpi-card c-blue">
+      <span class="kpi-icon">📅</span>
+      <div class="kpi-label">Period Covered</div>
+      <div class="kpi-value">23 Months</div>
+      <div class="kpi-sub">May 2024 – Mar 2026</div>
     </div>
-    <div class="kpi-card c-red">
-      <span class="kpi-icon">⚠️</span>
-      <div class="kpi-label">FY 25-26 Outstanding</div>
-      <div class="kpi-value">₹2,18,207</div>
-      <div class="kpi-sub">Due ₹27.19 L · Received ₹25.01 L</div>
-      <div class="kpi-trend trend-down">Verify with RFTPM</div>
+    <div class="kpi-card c-gold">
+      <span class="kpi-icon">🔄</span>
+      <div class="kpi-label">Total Transactions</div>
+      <div class="kpi-value">₹89.59 L</div>
+      <div class="kpi-sub">Receipts + outflows tracked</div>
     </div>
   </div>
 
@@ -1029,6 +1234,38 @@ td.hi { color: var(--gold); font-weight: 700; }
 
 </div><!-- main -->
 
+<!-- ══ THEME PANEL ══ -->
+<div class="theme-panel-overlay" id="themeOverlay" onclick="closeThemePanel(event)">
+  <div class="theme-panel" onclick="event.stopPropagation()">
+    <div class="theme-panel-title">🎨 Choose Dashboard Theme</div>
+
+    <div class="theme-group-label">🌑 Dark Themes</div>
+    <div class="theme-swatches">
+      <div class="swatch active" id="sw-dark"     onclick="applyTheme('dark')"     style="background:linear-gradient(135deg,#070d1a,#0f2040)"><span class="swatch-check">✓</span><span class="swatch-label">Dark Navy</span></div>
+      <div class="swatch"        id="sw-midnight" onclick="applyTheme('midnight')" style="background:linear-gradient(135deg,#0a0a0a,#1a1208)"><span class="swatch-check">✓</span><span class="swatch-label">Midnight</span></div>
+      <div class="swatch"        id="sw-purple"   onclick="applyTheme('purple')"   style="background:linear-gradient(135deg,#0d0820,#1e1060)"><span class="swatch-check">✓</span><span class="swatch-label">Deep Purple</span></div>
+      <div class="swatch"        id="sw-ocean"    onclick="applyTheme('ocean')"    style="background:linear-gradient(135deg,#071520,#0a3050)"><span class="swatch-check">✓</span><span class="swatch-label">Ocean Dark</span></div>
+      <div class="swatch"        id="sw-charcoal" onclick="applyTheme('charcoal')" style="background:linear-gradient(135deg,#1a1612,#302515)"><span class="swatch-check">✓</span><span class="swatch-label">Charcoal</span></div>
+    </div>
+
+    <div class="theme-group-label">☀️ Light Themes</div>
+    <div class="theme-swatches">
+      <div class="swatch" id="sw-white"  onclick="applyTheme('white')"  style="background:linear-gradient(135deg,#fff,#e8f0ff);border-color:#ccc"><span class="swatch-check" style="color:#333">✓</span><span class="swatch-label" style="color:#333">Clean White</span></div>
+      <div class="swatch" id="sw-day"    onclick="applyTheme('day')"    style="background:linear-gradient(135deg,#f0f4f8,#dce8f5);border-color:#ccc"><span class="swatch-check" style="color:#333">✓</span><span class="swatch-label" style="color:#333">Day Blue</span></div>
+      <div class="swatch" id="sw-cream"  onclick="applyTheme('cream')"  style="background:linear-gradient(135deg,#faf7f0,#f5e8cc);border-color:#ccc"><span class="swatch-check" style="color:#333">✓</span><span class="swatch-label" style="color:#333">Warm Cream</span></div>
+      <div class="swatch" id="sw-sage"   onclick="applyTheme('sage')"   style="background:linear-gradient(135deg,#f0f4f0,#d4e8d4);border-color:#ccc"><span class="swatch-check" style="color:#333">✓</span><span class="swatch-label" style="color:#333">Sage Green</span></div>
+    </div>
+
+    <div class="theme-group-label">💎 Premium &amp; Bold</div>
+    <div class="theme-swatches">
+      <div class="swatch" id="sw-red"      onclick="applyTheme('red')"      style="background:linear-gradient(135deg,#0f0608,#4c0519)"><span class="swatch-check">✓</span><span class="swatch-label">Exec Red</span></div>
+      <div class="swatch" id="sw-amber"    onclick="applyTheme('amber')"    style="background:linear-gradient(135deg,#0f0a02,#451a03)"><span class="swatch-check">✓</span><span class="swatch-label">Amber Gold</span></div>
+      <div class="swatch" id="sw-emerald"  onclick="applyTheme('emerald')"  style="background:linear-gradient(135deg,#020f0a,#064e3b)"><span class="swatch-check">✓</span><span class="swatch-label">Emerald</span></div>
+      <div class="swatch" id="sw-moderate" onclick="applyTheme('moderate')" style="background:linear-gradient(135deg,#111827,#1e3a5f)"><span class="swatch-check">✓</span><span class="swatch-label">Slate Grey</span></div>
+    </div>
+  </div>
+</div>
+
 <div class="dash-footer">
   Panache Villa V1 &nbsp;·&nbsp; Property Management Dashboard &nbsp;·&nbsp; Data: RFTPM Commission Notes + Tally Bank Ledger &nbsp;·&nbsp; Compiled: April 2026 &nbsp;·&nbsp; <strong>Confidential — For Board Use Only</strong>
 </div>
@@ -1061,6 +1298,43 @@ function show(year) {
 
 // Default view on load
 show('all');
+
+// ── Theme Engine ──
+const ALL_THEMES = ['dark','midnight','purple','ocean','charcoal','white','day','cream','sage','red','amber','emerald','moderate'];
+
+function applyTheme(t) {
+  // Remove all theme classes from body
+  ALL_THEMES.forEach(th => document.body.classList.remove('t-' + th));
+  document.body.classList.add('t-' + t);
+  // Update swatch active state
+  ALL_THEMES.forEach(th => {
+    const sw = document.getElementById('sw-' + th);
+    if (sw) sw.classList.remove('active');
+  });
+  const active = document.getElementById('sw-' + t);
+  if (active) active.classList.add('active');
+  // Also update theme panel background to match
+  const panel = document.querySelector('.theme-panel');
+  if (panel) {
+    const isDark = ['dark','midnight','purple','ocean','charcoal','red','amber','emerald','moderate'].includes(t);
+    panel.style.background = isDark ? 'var(--card)' : '#fff';
+    panel.style.borderColor = isDark ? 'var(--border)' : '#ddd';
+  }
+  closeThemePanel();
+}
+
+function toggleThemePanel() {
+  document.getElementById('themeOverlay').classList.toggle('open');
+}
+
+function closeThemePanel(e) {
+  if (!e || e.target === document.getElementById('themeOverlay')) {
+    document.getElementById('themeOverlay').classList.remove('open');
+  }
+}
+
+// Load with default dark theme
+applyTheme('dark');
 </script>
 </body>
 </html>
