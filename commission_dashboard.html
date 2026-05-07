@@ -313,6 +313,8 @@ tfoot td:not(:first-child) { text-align:right; }
   <button class="year-tab" id="tab-fy24" onclick="show('fy24')">🟡 FY 2023-24 <small style="font-size:10px;opacity:.65">(Partial · 7 mo)</small></button>
   <button class="year-tab" id="tab-fy25" onclick="show('fy25')">🔵 FY 2024-25</button>
   <button class="year-tab" id="tab-fy26" onclick="show('fy26')">🟢 FY 2025-26</button>
+  <div class="nav-divider"></div>
+  <button class="year-tab" id="tab-tally" onclick="show('tally')">📒 Villa P&amp;L · Tally Ledger</button>
 </div>
 
 <div class="main">
@@ -1031,6 +1033,132 @@ tfoot td:not(:first-child) { text-align:right; }
   </div>
 </div><!-- /view-fy26 -->
 
+
+<!-- ══════════════════════════════════════════════
+     VIEW: TALLY LEDGER — Villa Month-wise P&L
+══════════════════════════════════════════════ -->
+<div id="view-tally" class="fy-section">
+
+  <div class="section-header">
+    <h2>Villa Tally Ledger — Month-wise P&amp;L</h2>
+    <div class="section-line"></div>
+    <span class="section-badge badge-green">May 2024 – Apr 2026 · 24 Months · Actual Tally Transactions</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card c-gold">
+      <span class="kpi-icon">🏠</span>
+      <div class="kpi-label">Total Rental Income</div>
+      <div class="kpi-value" id="tKPI_income">—</div>
+      <div class="kpi-sub">24 months · Rainforest &amp; Talisman</div>
+    </div>
+    <div class="kpi-card" style="border-color:var(--red);">
+      <span class="kpi-icon">💸</span>
+      <div class="kpi-label">Total Operating Expenses</div>
+      <div class="kpi-value" id="tKPI_exp" style="color:var(--red);">—</div>
+      <div class="kpi-sub">Staff · BMW EMI · Maintenance · GST</div>
+    </div>
+    <div class="kpi-card c-green">
+      <span class="kpi-icon">📈</span>
+      <div class="kpi-label">Net Villa Surplus</div>
+      <div class="kpi-value" id="tKPI_net">—</div>
+      <div class="kpi-sub">Before CC payments &amp; drawings</div>
+    </div>
+    <div class="kpi-card c-blue">
+      <span class="kpi-icon">📅</span>
+      <div class="kpi-label">Avg Monthly Rental</div>
+      <div class="kpi-value" id="tKPI_avg">—</div>
+      <div class="kpi-sub">Monthly avg over 24 months</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid-3" style="margin-top:16px;">
+    <div class="kpi-card">
+      <span class="kpi-icon">👥</span>
+      <div class="kpi-label">Total Staff Cost</div>
+      <div class="kpi-value" id="tKPI_staff" style="font-size:22px;">—</div>
+      <div class="kpi-sub">Regular salaries + Hiral Goel/Director</div>
+    </div>
+    <div class="kpi-card" style="border-color:#f59e0b;">
+      <span class="kpi-icon">🚗</span>
+      <div class="kpi-label">BMW Car EMI Total</div>
+      <div class="kpi-value" id="tKPI_bmw" style="font-size:22px;color:#f59e0b;">—</div>
+      <div class="kpi-sub">Mar 2025 – Apr 2026 · ₹85,279/mo</div>
+    </div>
+    <div class="kpi-card" style="border-color:var(--teal);">
+      <span class="kpi-icon">🔧</span>
+      <div class="kpi-label">Maintenance + GST + Professional</div>
+      <div class="kpi-value" id="tKPI_other" style="font-size:22px;color:var(--teal);">—</div>
+      <div class="kpi-sub">Upkeep · Taxes · Legal &amp; CA Fees</div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="padding:24px;margin-top:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">📊 Month-wise Villa Income vs Expenses (₹ Lakhs)</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Green bars = Rental Income. Coloured bars = Expense categories. Gold line = Net Monthly P&amp;L.</div>
+    <canvas id="tallyChart" height="110"></canvas>
+  </div>
+
+  <div class="chart-card" style="padding:24px;margin-top:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">📉 Net Monthly P&amp;L Trend</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Green dots = surplus months. Red dots = deficit months.</div>
+    <canvas id="tallyNetChart" height="70"></canvas>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:16px;">🥧 Expense Breakdown (24-Month Total)</div>
+      <canvas id="tallyDonut" height="200"></canvas>
+    </div>
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📌 Key Observations</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.9;">
+        <div style="margin-bottom:8px;">🟢 <strong>Jan 2026 — Record ₹7.56L</strong> rental (peak Goa season)</div>
+        <div style="margin-bottom:8px;">🔴 <strong>Aug 2024 — Zero rental;</strong> highest off-peak deficit</div>
+        <div style="margin-bottom:8px;">⚠️ <strong>Feb 2026 — ₹4.05L</strong> one-time Hiral Goel (deferred)</div>
+        <div style="margin-bottom:8px;">🚗 <strong>BMW EMI ₹85K/mo</strong> starts Mar 2025 — largest fixed cost</div>
+        <div style="margin-bottom:8px;">🌟 <strong>Nov–Jan season</strong> = consistently strongest rental quarter</div>
+        <div style="margin-bottom:8px;">📊 <strong>Net 24-month yield:</strong> ₹17.96L operating surplus</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="padding:24px;margin-top:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">📋 Month-wise Tally Transaction Detail</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Source: Clubmedisa Tally Ledger · Income = RFTPM receipts · Direct operating costs only</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:var(--card2);border-bottom:2px solid var(--gold);">
+            <th style="padding:10px 8px;text-align:left;color:var(--gold);white-space:nowrap">Month</th>
+            <th style="padding:10px 8px;text-align:right;color:#10b981;white-space:nowrap">Rental ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:#ef4444;white-space:nowrap">Staff ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:#8b5cf6;white-space:nowrap">Hiral Goel ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:#f59e0b;white-space:nowrap">BMW EMI ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:#06b6d4;white-space:nowrap">Maint ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:#64748b;white-space:nowrap">Prof/GST ₹</th>
+            <th style="padding:10px 8px;text-align:right;color:var(--gold);white-space:nowrap">Net P&amp;L ₹</th>
+          </tr>
+        </thead>
+        <tbody id="tallyTableBody"></tbody>
+        <tfoot id="tallyTableFoot"></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:11.5px;color:var(--muted);line-height:1.8;">
+    <strong style="color:var(--gold)">📌 Ledger Definitions:</strong>
+    &nbsp;<strong>Income</strong> = Rainforest &amp; Talisman Property Management receipts (villa rental per Tally).
+    &nbsp;<strong>Staff</strong> = Monthly salaries (3 staff + temp cooks).
+    &nbsp;<strong>Hiral Goel</strong> = Director/manager fee (normally ₹45,000/mo; Feb 2026 includes ₹4,05,000 deferred/bonus).
+    &nbsp;<strong>BMW EMI</strong> = BMW Financial Services (₹78,613 Mar-25; ₹85,279/mo from Apr-25).
+    &nbsp;<strong>Maintenance</strong> = Safety First, Kenkre Generators, Schindler Elevator, Rajhans Infotech.
+    &nbsp;<strong>Prof/GST</strong> = CA/legal fees, setup costs, IGST 18%.
+    &nbsp;<strong>Excluded</strong>: CC bill payments, director drawings/injections, loan repayments.
+  </div>
+
+</div><!-- /view-tally -->
+
 </div><!-- /main -->
 
 <!-- THEME PANEL -->
@@ -1071,6 +1199,7 @@ function show(v) {
   document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
   document.getElementById('tab-' + v).classList.add('active');
+  if (v === 'tally') setTimeout(initTallyChart, 80);
 }
 
 const LIGHT = ['white','day','cream','sage'];
@@ -1208,6 +1337,135 @@ document.querySelectorAll('.year-tab').forEach(btn => {
 
 // Direct call — guaranteed since script is at bottom of body
 if (!window._cTrend) initCharts();
+
+// ── Tally Ledger P&L Charts ──
+function initTallyChart() {
+  if (window._tallyDone) return;
+  window._tallyDone = true;
+
+  var TM = ['May 24','Jun 24','Jul 24','Aug 24','Sep 24','Oct 24','Nov 24','Dec 24',
+            'Jan 25','Feb 25','Mar 25','Apr 25','May 25','Jun 25','Jul 25','Aug 25',
+            'Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'];
+
+  var TR = [140720,206803,211436,0,377291,233431,48990,383932,553707,414198,98869,181175,
+            32295,87432,87150,172845,110377,222037,282669,85249,756429,319494,259584,84962];
+  var TS = [0,31725,34500,34500,36500,79000,0,44827,32500,32500,33500,27500,
+            34500,41500,36500,36500,26500,21500,35565,41141,21500,44500,38016,42624];
+  var TH = [0,90000,0,90000,45000,45000,45000,0,0,90000,0,0,
+            0,0,0,0,0,0,0,0,90000,450000,0,0];
+  var TB = [0,0,0,0,0,0,0,0,0,0,78613,85279,85279,85279,85279,85279,
+            85279,85279,85279,85279,85279,85279,85279,85279];
+  var TM2= [0,8850,0,19942,0,2056,0,11857,0,0,7838,0,
+            0,59826,0,4130,0,11800,0,8850,0,11013,0,0];
+  var TP = [79000,64004,0,0,0,0,0,0,0,120080,77740,0,
+            0,0,0,9000,0,0,24118,0,0,95400,0,0];
+  var TN = TR.map(function(r,i){return r-TS[i]-TH[i]-TB[i]-TM2[i]-TP[i];});
+
+  var sumArr=function(a){return a.reduce(function(s,v){return s+v;},0);};
+  var totR=sumArr(TR),totS=sumArr(TS),totH=sumArr(TH);
+  var totB=sumArr(TB),totM2=sumArr(TM2),totP=sumArr(TP);
+  var totExp=totS+totH+totB+totM2+totP, totN=totR-totExp;
+  var fmtL=function(v){return '₹'+(v/100000).toFixed(2)+' L';};
+  var fmtI=function(v){return v.toLocaleString('en-IN');};
+
+  var $=function(id){return document.getElementById(id);};
+  if($('tKPI_income')) $('tKPI_income').textContent=fmtL(totR);
+  if($('tKPI_exp'))    $('tKPI_exp').textContent=fmtL(totExp);
+  if($('tKPI_net'))    $('tKPI_net').textContent=fmtL(totN);
+  if($('tKPI_avg'))    $('tKPI_avg').textContent=fmtL(totR/24);
+  if($('tKPI_staff'))  $('tKPI_staff').textContent=fmtL(totS+totH);
+  if($('tKPI_bmw'))    $('tKPI_bmw').textContent=fmtL(totB);
+  if($('tKPI_other'))  $('tKPI_other').textContent=fmtL(totM2+totP);
+
+  var tbody=$('tallyTableBody');
+  if(tbody){
+    tbody.innerHTML=TM.map(function(m,i){
+      var n=TN[i],nc=n>=0?'#10b981':'#ef4444';
+      var bg=i%2===0?'':'background:rgba(255,255,255,0.02);';
+      function dash(v){return v>0?fmtI(v):'<span style="opacity:.3">—</span>';}
+      var hgCell=TH[i]>100000?'<span style="color:#ef4444;font-weight:700">'+fmtI(TH[i])+'</span>':dash(TH[i]);
+      return '<tr style="border-bottom:1px solid var(--border);'+bg+'">'+
+        '<td style="padding:8px 10px;font-weight:600;white-space:nowrap;color:var(--text)">'+m+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:#10b981">'+(TR[i]>0?fmtI(TR[i]):'<span style="opacity:.3">—</span>')+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:var(--muted)">'+dash(TS[i])+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:#8b5cf6">'+hgCell+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:#f59e0b">'+dash(TB[i])+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:#06b6d4">'+dash(TM2[i])+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;color:var(--muted)">'+dash(TP[i])+'</td>'+
+        '<td style="padding:8px 10px;text-align:right;font-weight:700;color:'+nc+'">'+(n>=0?'+':'')+fmtI(n)+'</td>'+
+        '</tr>';
+    }).join('');
+  }
+  var tfoot=$('tallyTableFoot');
+  if(tfoot){
+    tfoot.innerHTML='<tr style="background:var(--card2);border-top:2px solid var(--gold);font-weight:700;font-size:12.5px;">'+
+      '<td style="padding:10px 8px;color:var(--gold)">TOTAL (24 mo.)</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#10b981">'+fmtI(totR)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#ef4444">'+fmtI(totS)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#8b5cf6">'+fmtI(totH)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#f59e0b">'+fmtI(totB)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#06b6d4">'+fmtI(totM2)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#64748b">'+fmtI(totP)+'</td>'+
+      '<td style="padding:10px 8px;text-align:right;color:#10b981">+'+fmtI(totN)+'</td>'+
+      '</tr>';
+  }
+
+  var sc=function(a){return a.map(function(v){return+(v/100000).toFixed(2);});};
+  var sR=sc(TR),sS=sc(TS),sH=sc(TH),sB=sc(TB),sM=sc(TM2),sP=sc(TP),sN=sc(TN);
+
+  var ctx1=document.getElementById('tallyChart');
+  if(ctx1){
+    if(window._cTally){try{window._cTally.destroy();}catch(e){}}
+    window._cTally=new Chart(ctx1,{data:{labels:TM,datasets:[
+      {type:'bar',label:'Rental Income',data:sR,backgroundColor:'rgba(16,185,129,0.75)',borderColor:'#10b981',borderWidth:1,order:2},
+      {type:'bar',label:'Staff Salary',data:sS,backgroundColor:'rgba(239,68,68,0.65)',borderColor:'#ef4444',borderWidth:1,order:2},
+      {type:'bar',label:'Hiral Goel',data:sH,backgroundColor:'rgba(139,92,246,0.65)',borderColor:'#8b5cf6',borderWidth:1,order:2},
+      {type:'bar',label:'BMW EMI',data:sB,backgroundColor:'rgba(245,158,11,0.75)',borderColor:'#f59e0b',borderWidth:1,order:2},
+      {type:'bar',label:'Maintenance',data:sM,backgroundColor:'rgba(6,182,212,0.65)',borderColor:'#06b6d4',borderWidth:1,order:2},
+      {type:'bar',label:'Prof+GST',data:sP,backgroundColor:'rgba(100,116,139,0.65)',borderColor:'#64748b',borderWidth:1,order:2},
+      {type:'line',label:'Net P&L',data:sN,borderColor:'#c9a84c',backgroundColor:'rgba(201,168,76,0.08)',
+       borderWidth:2.5,pointBackgroundColor:sN.map(function(v){return v>=0?'#10b981':'#ef4444';}),
+       pointRadius:4,tension:0.35,fill:false,order:1}
+    ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11},usePointStyle:true,boxWidth:10}},
+        tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': ₹'+Math.abs(c.raw).toFixed(2)+'L';}}}},
+      scales:{x:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{color:'#64748b',font:{size:10},callback:function(v){return '₹'+v+'L';}},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+  }
+
+  var ctx2=document.getElementById('tallyNetChart');
+  if(ctx2){
+    if(window._cTallyNet){try{window._cTallyNet.destroy();}catch(e){}}
+    window._cTallyNet=new Chart(ctx2,{type:'line',data:{labels:TM,datasets:[{
+      label:'Net Monthly P&L',data:sN,borderColor:'#c9a84c',backgroundColor:'rgba(201,168,76,0.1)',
+      pointBackgroundColor:sN.map(function(v){return v>=0?'#10b981':'#ef4444';}),
+      pointBorderColor:sN.map(function(v){return v>=0?'#10b981':'#ef4444';}),
+      pointRadius:5,borderWidth:2,tension:0.35,fill:true
+    }]},options:{responsive:true,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return ' Net P&L: ₹'+c.raw+'L'+(c.raw>=0?' (surplus)':' (deficit)');}}},
+      },
+      scales:{x:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{color:'#64748b',font:{size:10},callback:function(v){return '₹'+v+'L';}},
+          grid:{color:'rgba(255,255,255,0.04)'},
+          afterDataLimits:function(s){s.max=Math.max(s.max,0.5);s.min=Math.min(s.min,-0.5);}
+        }}}});
+  }
+
+  var ctx3=document.getElementById('tallyDonut');
+  if(ctx3){
+    if(window._cTallyDonut){try{window._cTallyDonut.destroy();}catch(e){}}
+    window._cTallyDonut=new Chart(ctx3,{type:'doughnut',data:{
+      labels:['Staff Salaries','Hiral Goel/Director','BMW Car EMI','Maintenance','Prof & GST'],
+      datasets:[{data:[(totS/100000).toFixed(2),(totH/100000).toFixed(2),(totB/100000).toFixed(2),(totM2/100000).toFixed(2),(totP/100000).toFixed(2)],
+        backgroundColor:['rgba(239,68,68,0.8)','rgba(139,92,246,0.8)','rgba(245,158,11,0.8)','rgba(6,182,212,0.8)','rgba(100,116,139,0.8)'],
+        borderColor:['#ef4444','#8b5cf6','#f59e0b','#06b6d4','#64748b'],borderWidth:2}]},
+      options:{responsive:true,cutout:'62%',plugins:{
+        legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11},usePointStyle:true,padding:12}},
+        tooltip:{callbacks:{label:function(c){var pct=Math.round(c.raw/(totExp/100000)*100);return ' '+c.label+': ₹'+c.raw+'L ('+pct+'%)';}}}
+      }}});
+  }
+}
 </script>
 </body>
 </html>
