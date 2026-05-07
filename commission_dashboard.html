@@ -1003,6 +1003,9 @@ document.querySelectorAll('.year-tab').forEach(btn => {
     }, 50);
   });
 });
+
+// Direct call — guaranteed since script is at bottom of body
+if (!window._cTrend) initCharts();
 </script>
 </body>
 </html>
