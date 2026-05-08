@@ -314,7 +314,9 @@ tfoot td:not(:first-child) { text-align:right; }
   <button class="year-tab" id="tab-fy25" onclick="show('fy25')">🔵 FY 2024-25</button>
   <button class="year-tab" id="tab-fy26" onclick="show('fy26')">🟢 FY 2025-26</button>
   <div class="nav-divider"></div>
-  <button class="year-tab" id="tab-tally" onclick="show('tally')">📒 Villa P&amp;L · Tally Ledger</button>
+  <button class="year-tab" id="tab-tally" onclick="show('tally')">📒 Villa P&L · Tally Ledger</button>
+  <div class="nav-divider"></div>
+  <button class="year-tab" id="tab-cash" onclick="show('cash')">💵 Cash Bookings</button>
 </div>
 
 <div class="main">
@@ -1159,6 +1161,182 @@ tfoot td:not(:first-child) { text-align:right; }
 
 </div><!-- /view-tally -->
 
+<!-- ══════════════════════════════════════════════
+     VIEW: CASH BOOKINGS
+══════════════════════════════════════════════ -->
+<div id="view-cash" class="fy-section">
+
+  <div class="section-header">
+    <h2>Cash Bookings — "Other" Channel</h2>
+    <div class="section-line"></div>
+    <span class="section-badge badge-green">FY 2024-25 &amp; FY 2025-26 · 6 Bookings · Direct Cash / UPI Receipts</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card c-gold">
+      <span class="kpi-icon">💵</span>
+      <div class="kpi-label">Total Cash Gross (2 Yrs)</div>
+      <div class="kpi-value">₹4,46,000</div>
+      <div class="kpi-sub">FY25: ₹1,32,000 · FY26: ₹3,14,000</div>
+    </div>
+    <div class="kpi-card c-green">
+      <span class="kpi-icon">🏠</span>
+      <div class="kpi-label">Owner's Share (80%)</div>
+      <div class="kpi-value">₹3,56,800</div>
+      <div class="kpi-sub">Due directly to owner · No TDS/GST</div>
+    </div>
+    <div class="kpi-card c-blue">
+      <span class="kpi-icon">🌙</span>
+      <div class="kpi-label">Total Cash Nights</div>
+      <div class="kpi-value">17 Nights</div>
+      <div class="kpi-sub">FY25: 5 nights · FY26: 12 nights</div>
+    </div>
+    <div class="kpi-card" style="border-color:var(--purple);">
+      <span class="kpi-icon">📊</span>
+      <div class="kpi-label">RFTPM Commission (20%)</div>
+      <div class="kpi-value" style="color:var(--purple);">₹89,200</div>
+      <div class="kpi-sub">FY25: ₹26,400 · FY26: ₹62,800</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:16px;">📅 FY 2024-25 Cash Bookings (₹1,32,000 Gross)</div>
+      <canvas id="cashChart25" height="200"></canvas>
+    </div>
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:16px;">📅 FY 2025-26 Cash Bookings (₹3,14,000 Gross)</div>
+      <canvas id="cashChart26" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card" style="padding:24px;margin-top:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">📋 FY 2024-25 · Cash Booking Details</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Source: Commission Notes · OTHER column = cash/UPI received directly (not via RFTPM cheque)</div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="background:var(--card2);border-bottom:2px solid var(--gold);">
+        <th style="padding:10px 8px;text-align:left;color:var(--gold);">Check In</th>
+        <th style="padding:10px 8px;text-align:left;color:var(--gold);">Check Out</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--gold);">Nights</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--gold);">Rate/Night</th>
+        <th style="padding:10px 8px;text-align:right;color:#10b981;">Gross (₹)</th>
+        <th style="padding:10px 8px;text-align:right;color:#3b82f6;">Owner 80% (₹)</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--purple);">RFTPM 20% (₹)</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 8px;">24-May-2024</td><td style="padding:10px 8px;">27-May-2024</td>
+          <td style="padding:10px 8px;text-align:right;">3</td><td style="padding:10px 8px;text-align:right;">₹24,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹72,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹57,600</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹14,400</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);">
+          <td style="padding:10px 8px;">08-Sep-2024</td><td style="padding:10px 8px;">10-Sep-2024</td>
+          <td style="padding:10px 8px;text-align:right;">2</td><td style="padding:10px 8px;text-align:right;">₹30,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹60,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹48,000</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹12,000</td>
+        </tr>
+        <tr style="background:rgba(201,168,76,0.07);border-top:2px solid var(--gold);">
+          <td colspan="2" style="padding:10px 8px;font-weight:700;color:var(--gold);">FY 2024-25 Total</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--gold);">5</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--muted);">Avg ₹26,400</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:#10b981;">₹1,32,000</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:#3b82f6;">₹1,05,600</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--purple);">₹26,400</td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="chart-card" style="padding:24px;margin-top:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">📋 FY 2025-26 · Cash Booking Details</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Source: Commission Notes · Others column = cash/UPI received directly</div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="background:var(--card2);border-bottom:2px solid var(--gold);">
+        <th style="padding:10px 8px;text-align:left;color:var(--gold);">Check In</th>
+        <th style="padding:10px 8px;text-align:left;color:var(--gold);">Check Out</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--gold);">Nights</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--gold);">Rate/Night</th>
+        <th style="padding:10px 8px;text-align:right;color:#10b981;">Gross (₹)</th>
+        <th style="padding:10px 8px;text-align:right;color:#3b82f6;">Owner 80% (₹)</th>
+        <th style="padding:10px 8px;text-align:right;color:var(--purple);">RFTPM 20% (₹)</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 8px;">31-May-2025</td><td style="padding:10px 8px;">05-Jun-2025</td>
+          <td style="padding:10px 8px;text-align:right;">5</td><td style="padding:10px 8px;text-align:right;">₹28,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹1,40,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹1,12,000</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹28,000</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);">
+          <td style="padding:10px 8px;">12-Jun-2025</td><td style="padding:10px 8px;">16-Jun-2025</td>
+          <td style="padding:10px 8px;text-align:right;">4</td><td style="padding:10px 8px;text-align:right;">₹23,500</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹94,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹75,200</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹18,800</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 8px;">24-Jan-2026</td><td style="padding:10px 8px;">26-Jan-2026</td>
+          <td style="padding:10px 8px;text-align:right;">2</td><td style="padding:10px 8px;text-align:right;">₹25,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹50,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹40,000</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹10,000</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);">
+          <td style="padding:10px 8px;">08-Feb-2026</td><td style="padding:10px 8px;">09-Feb-2026</td>
+          <td style="padding:10px 8px;text-align:right;">1</td><td style="padding:10px 8px;text-align:right;">₹30,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#10b981;font-weight:600;">₹30,000</td>
+          <td style="padding:10px 8px;text-align:right;color:#3b82f6;">₹24,000</td>
+          <td style="padding:10px 8px;text-align:right;color:var(--purple);">₹6,000</td>
+        </tr>
+        <tr style="background:rgba(201,168,76,0.07);border-top:2px solid var(--gold);">
+          <td colspan="2" style="padding:10px 8px;font-weight:700;color:var(--gold);">FY 2025-26 Total</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--gold);">12</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--muted);">Avg ₹26,167</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:#10b981;">₹3,14,000</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:#3b82f6;">₹2,51,200</td>
+          <td style="padding:10px 8px;text-align:right;font-weight:700;color:var(--purple);">₹62,800</td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:16px;">🏆 Grand Total — Both Years</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 4px;color:var(--muted);">Total Cash Gross</td><td style="padding:8px 4px;text-align:right;font-weight:700;color:#10b981;">₹4,46,000</td></tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);"><td style="padding:8px 4px;color:var(--muted);">Owner's Share (80%)</td><td style="padding:8px 4px;text-align:right;font-weight:700;color:#3b82f6;">₹3,56,800</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 4px;color:var(--muted);">RFTPM Commission (20%)</td><td style="padding:8px 4px;text-align:right;font-weight:700;color:var(--purple);">₹89,200</td></tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);"><td style="padding:8px 4px;color:var(--muted);">Total Cash Nights</td><td style="padding:8px 4px;text-align:right;font-weight:700;color:var(--gold);">17 Nights</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 4px;color:var(--muted);">Avg Rate / Night</td><td style="padding:8px 4px;text-align:right;font-weight:700;">₹26,235</td></tr>
+        <tr style="background:rgba(201,168,76,0.07);"><td style="padding:8px 4px;color:var(--muted);">Cash % of 2-Yr Total</td><td style="padding:8px 4px;text-align:right;font-weight:700;color:var(--gold);">~6.2%</td></tr>
+      </table>
+    </div>
+    <div class="chart-card" style="padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📌 Key Observations</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.9;">
+        <div style="margin-bottom:8px;">💵 <strong>6 cash bookings</strong> across 2 years — settled directly with owner</div>
+        <div style="margin-bottom:8px;">📈 <strong>Grew 2.4×</strong> from FY25 (₹1.32L) to FY26 (₹3.14L)</div>
+        <div style="margin-bottom:8px;">🌟 <strong>Largest: ₹1,40,000</strong> (May 2025 · 5 nights @ ₹28K)</div>
+        <div style="margin-bottom:8px;">⚠️ <strong>No GST / TDS</strong> — owner gets 80% directly</div>
+        <div style="margin-bottom:8px;">🔎 <strong>Not in Tally RFTPM receipts</strong> — off-ledger cash</div>
+        <div style="margin-bottom:8px;">📊 <strong>~6.2%</strong> of total 2-year gross revenue</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:11.5px;color:var(--muted);line-height:1.8;">
+    <strong style="color:var(--gold)">📌 Definition:</strong>
+    &nbsp;<strong>"OTHER"/"Others"</strong> = guest paid via cash/UPI directly (not through RFTPM cheque).
+    Owner gets <strong>80% directly</strong> (no GST, no TDS). RFTPM keeps <strong>20% commission</strong>. These do NOT appear in Tally RFTPM receipts.
+  </div>
+
+</div><!-- /view-cash -->
+
 </div><!-- /main -->
 
 <!-- THEME PANEL -->
@@ -1200,6 +1378,7 @@ function show(v) {
   document.getElementById('view-' + v).classList.add('active');
   document.getElementById('tab-' + v).classList.add('active');
   if (v === 'tally') setTimeout(initTallyChart, 80);
+  if (v === 'cash') setTimeout(initCashCharts, 80);
 }
 
 const LIGHT = ['white','day','cream','sage'];
@@ -1465,6 +1644,32 @@ function initTallyChart() {
         tooltip:{callbacks:{label:function(c){var pct=Math.round(c.raw/(totExp/100000)*100);return ' '+c.label+': ₹'+c.raw+'L ('+pct+'%)';}}}
       }}});
   }
+}
+
+// ── Cash Bookings Charts ──
+var _cashC25, _cashC26;
+function initCashCharts() {
+  const textColor = '#94a3b8', gridColor = 'rgba(255,255,255,0.06)';
+  const d25 = [
+    { label: 'Gross', data: [72000, 60000], backgroundColor: 'rgba(16,185,129,0.75)', borderRadius: 6 },
+    { label: "Owner 80%", data: [57600, 48000], backgroundColor: 'rgba(59,130,246,0.75)', borderRadius: 6 },
+    { label: 'RFTPM 20%', data: [14400, 12000], backgroundColor: 'rgba(139,92,246,0.75)', borderRadius: 6 }
+  ];
+  const d26 = [
+    { label: 'Gross', data: [140000, 94000, 50000, 30000], backgroundColor: 'rgba(16,185,129,0.75)', borderRadius: 6 },
+    { label: "Owner 80%", data: [112000, 75200, 40000, 24000], backgroundColor: 'rgba(59,130,246,0.75)', borderRadius: 6 },
+    { label: 'RFTPM 20%', data: [28000, 18800, 10000, 6000], backgroundColor: 'rgba(139,92,246,0.75)', borderRadius: 6 }
+  ];
+  const mkOpts = () => ({ responsive:true, maintainAspectRatio:true,
+    plugins:{ legend:{position:'bottom',labels:{color:textColor,font:{size:11},usePointStyle:true}},
+      tooltip:{callbacks:{label:c=>' '+c.dataset.label+': ₹'+c.raw.toLocaleString('en-IN')}} },
+    scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
+      y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>'₹'+(v/1000)+'K'},beginAtZero:true} }
+  });
+  const c25=document.getElementById('cashChart25');
+  if(c25){if(_cashC25)_cashC25.destroy();_cashC25=new Chart(c25,{type:'bar',data:{labels:['May 2024','Sep 2024'],datasets:d25},options:mkOpts()});}
+  const c26=document.getElementById('cashChart26');
+  if(c26){if(_cashC26)_cashC26.destroy();_cashC26=new Chart(c26,{type:'bar',data:{labels:['May 2025','Jun 2025','Jan 2026','Feb 2026'],datasets:d26},options:mkOpts()});}
 }
 </script>
 </body>
