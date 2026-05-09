@@ -1377,42 +1377,90 @@ tfoot td:not(:first-child) { text-align:right; }
     <h2>🏦 Club Medisa – ICICI Bank Ledger</h2>
     <p class="subtitle">Apr 2024 – May 2026 &nbsp;·&nbsp; Tally Accounting Data</p>
   </div>
-  <div class="kpi-grid">
+
+  <!-- KPI Row -->
+  <div class="kpi-grid" style="margin-bottom:1.5rem">
     <div class="kpi-card"><div class="kpi-label">Total Credits</div><div class="kpi-value" style="color:#10b981">₹91.43L</div><div class="kpi-sub">25 months</div></div>
     <div class="kpi-card"><div class="kpi-label">Total Debits</div><div class="kpi-value" style="color:#ef4444">₹91.26L</div><div class="kpi-sub">25 months</div></div>
     <div class="kpi-card"><div class="kpi-label">Closing Balance</div><div class="kpi-value">₹16,569</div><div class="kpi-sub">Dr · May 2026</div></div>
     <div class="kpi-card"><div class="kpi-label">Peak Balance</div><div class="kpi-value">₹7.30L</div><div class="kpi-sub">Sep 2024</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
-    <div class="chart-box"><h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">Credit Sources</h3><div style="height:240px"><canvas id="bankCreditChart"></canvas></div></div>
-    <div class="chart-box"><h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">Debit Categories</h3><div style="height:240px"><canvas id="bankDebitChart"></canvas></div></div>
+
+  <!-- Monthly Recurring Fixed Costs -->
+  <div class="chart-box" style="margin-bottom:1.5rem;background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.02))">
+    <h3 style="margin-bottom:1rem;font-size:1rem;font-weight:700;color:#ef4444">📌 Monthly Recurring Fixed Costs</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:1.1rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.4rem">👥</div>
+        <div style="font-size:.8rem;font-weight:600;opacity:.7;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em">Salaries</div>
+        <div style="font-size:1.5rem;font-weight:800;color:#3b82f6">₹32,649</div>
+        <div style="font-size:.75rem;opacity:.6;margin-top:.2rem">per month avg</div>
+        <div style="margin-top:.6rem;background:rgba(59,130,246,0.15);border-radius:99px;height:6px"><div style="background:#3b82f6;width:38%;height:6px;border-radius:99px"></div></div>
+        <div style="font-size:.7rem;opacity:.5;margin-top:.3rem">₹8,16,218 total</div>
+      </div>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:1.1rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.4rem">🚗</div>
+        <div style="font-size:.8rem;font-weight:600;opacity:.7;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em">BMW 530Li EMI</div>
+        <div style="font-size:1.5rem;font-weight:800;color:#ef4444">₹85,279</div>
+        <div style="font-size:.75rem;opacity:.6;margin-top:.2rem">per month</div>
+        <div style="margin-top:.6rem;background:rgba(239,68,68,0.15);border-radius:99px;height:6px"><div style="background:#ef4444;width:100%;height:6px;border-radius:99px"></div></div>
+        <div style="font-size:.7rem;opacity:.5;margin-top:.3rem">₹12,72,519 total</div>
+      </div>
+      <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:1.1rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:.4rem">🏠</div>
+        <div style="font-size:.8rem;font-weight:600;opacity:.7;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em">Rent</div>
+        <div style="font-size:1.5rem;font-weight:800;color:#8b5cf6">₹ ?</div>
+        <div style="font-size:.75rem;opacity:.6;margin-top:.2rem">confirm amount</div>
+        <div style="margin-top:.6rem;background:rgba(139,92,246,0.15);border-radius:99px;height:6px"><div style="background:#8b5cf6;width:50%;height:6px;border-radius:99px"></div></div>
+        <div style="font-size:.7rem;opacity:.5;margin-top:.3rem">likely in CC payments</div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;padding:.7rem 1rem;background:rgba(0,0,0,0.04);border-radius:8px;font-size:.8rem;display:flex;gap:1.5rem;flex-wrap:wrap">
+      <span>💡 <b>Known monthly fixed burn:</b> ₹1,17,928/mo (Salaries + BMW EMI)</span>
+      <span>📋 <b>Annual fixed cost:</b> ~₹14.15L/yr</span>
+    </div>
   </div>
-  <div class="chart-box" style="margin-bottom:1.5rem"><h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">Monthly Closing Balance (May 2024 – May 2026)</h3><div style="height:200px"><canvas id="bankBalanceChart"></canvas></div></div>
+
+  <!-- Two columns: Donut + Expense Breakdown -->
+  <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;margin-bottom:1.5rem">
+    <div class="chart-box">
+      <h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">Expense Mix</h3>
+      <div style="height:260px"><canvas id="bankCreditChart"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">💳 Expense Breakdown by Category</h3>
+      <div style="display:flex;flex-direction:column;gap:.55rem;padding-top:.25rem">
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>💳 Credit Cards (Rent/Elec/Repairs)</span><span style="font-weight:700;color:#ef4444">₹32.17L · 35.2%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#ef4444;width:35.2%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>💸 Director Drawings</span><span style="font-weight:700;color:#f97316">₹14.44L · 15.8%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#f97316;width:15.8%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>🚗 BMW 530Li EMI</span><span style="font-weight:700;color:#f59e0b">₹12.73L · 13.9%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#f59e0b;width:13.9%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>💼 Hiral Goel Director Fee</span><span style="font-weight:700;color:#84cc16">₹9.45L · 10.4%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#84cc16;width:10.4%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>👥 Salaries</span><span style="font-weight:700;color:#3b82f6">₹8.16L · 8.9%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#3b82f6;width:8.9%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>🏗️ Car Purchase / Registration</span><span style="font-weight:700;color:#06b6d4">₹3.55L · 3.9%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#06b6d4;width:3.9%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>📋 GST Payments</span><span style="font-weight:700;color:#8b5cf6">₹2.78L · 3.0%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#8b5cf6;width:3%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>⚖️ Professional / Legal</span><span style="font-weight:700;color:#ec4899">₹1.91L · 2.1%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#ec4899;width:2.1%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>🔧 Maintenance / Repairs</span><span style="font-weight:700;color:#10b981">₹1.90L · 2.1%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#10b981;width:2.1%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>📦 Other</span><span style="font-weight:700;color:#64748b">₹4.17L · 4.6%</span></div><div style="height:8px;border-radius:99px;background:rgba(0,0,0,0.06)"><div style="height:8px;border-radius:99px;background:#64748b;width:4.6%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Balance Chart -->
+  <div class="chart-box" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">📈 Monthly Closing Balance Trend (May 2024 – May 2026)</h3>
+    <div style="height:200px"><canvas id="bankBalanceChart"></canvas></div>
+  </div>
+
+  <!-- Credit Sources -->
   <div class="chart-box">
-    <h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">Transaction Category Summary</h3>
-    <table class="data-table" style="width:100%;border-collapse:collapse;font-size:.85rem">
-      <thead><tr style="background:rgba(59,130,246,0.12)"><th style="padding:.5rem .75rem;text-align:left">Category</th><th style="padding:.5rem .75rem">Type</th><th style="padding:.5rem .75rem;text-align:right">Amount (₹)</th><th style="padding:.5rem .75rem;text-align:right">Share</th></tr></thead>
-      <tbody>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">RFTPM Villa Rental</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">53,51,075</td><td style="padding:.45rem .75rem;text-align:right">58.5%</td></tr>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">Aditya Goel Investments</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">20,60,000</td><td style="padding:.45rem .75rem;text-align:right">22.5%</td></tr>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">Mahesh Doifode Investments</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">6,90,000</td><td style="padding:.45rem .75rem;text-align:right">7.5%</td></tr>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">Mooga Tech Solutions</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">6,40,000</td><td style="padding:.45rem .75rem;text-align:right">7.0%</td></tr>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">IT Refund (Income Tax)</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">2,26,090</td><td style="padding:.45rem .75rem;text-align:right">2.5%</td></tr>
-        <tr style="color:#10b981"><td style="padding:.45rem .75rem">BMW Refund / Other</td><td style="padding:.45rem .75rem;text-align:center">Credit</td><td style="padding:.45rem .75rem;text-align:right">1,75,442</td><td style="padding:.45rem .75rem;text-align:right">1.9%</td></tr>
-        <tr style="font-weight:700;border-top:2px solid rgba(16,185,129,0.4)"><td style="padding:.45rem .75rem">Total Credits</td><td></td><td style="padding:.45rem .75rem;text-align:right;color:#10b981">91,42,607</td><td style="padding:.45rem .75rem;text-align:right">100%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Credit Cards (ICICI/HDFC/Axis/IDFC)</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">32,16,667</td><td style="padding:.45rem .75rem;text-align:right">35.2%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Director Drawings (Aditya + Mahesh)</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">14,44,000</td><td style="padding:.45rem .75rem;text-align:right">15.8%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">BMW 530Li EMI</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">12,72,519</td><td style="padding:.45rem .75rem;text-align:right">13.9%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Hiral Goel Director Fee</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">9,45,000</td><td style="padding:.45rem .75rem;text-align:right">10.4%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Salaries</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">8,16,218</td><td style="padding:.45rem .75rem;text-align:right">8.9%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Car Purchase / Registration</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">3,55,089</td><td style="padding:.45rem .75rem;text-align:right">3.9%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">GST Payments</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">2,78,142</td><td style="padding:.45rem .75rem;text-align:right">3.0%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Professional / Legal</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">1,91,200</td><td style="padding:.45rem .75rem;text-align:right">2.1%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Maintenance</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">1,90,000</td><td style="padding:.45rem .75rem;text-align:right">2.1%</td></tr>
-        <tr style="color:#ef4444"><td style="padding:.45rem .75rem">Other (Loans / Temp / Bank Charges)</td><td style="padding:.45rem .75rem;text-align:center">Debit</td><td style="padding:.45rem .75rem;text-align:right">4,17,203</td><td style="padding:.45rem .75rem;text-align:right">4.6%</td></tr>
-        <tr style="font-weight:700;border-top:2px solid rgba(239,68,68,0.4)"><td style="padding:.45rem .75rem">Total Debits</td><td></td><td style="padding:.45rem .75rem;text-align:right;color:#ef4444">91,26,038</td><td style="padding:.45rem .75rem;text-align:right">100%</td></tr>
-      </tbody>
-    </table>
+    <h3 style="margin-bottom:.75rem;font-size:.95rem;font-weight:600">💰 Credit Sources</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem">
+      <div style="padding:.75rem;border-radius:10px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">RFTPM Villa Rental</div><div style="font-size:1.1rem;font-weight:800;color:#10b981">₹53.51L</div><div style="font-size:.7rem;opacity:.5">58.5% of credits</div></div>
+      <div style="padding:.75rem;border-radius:10px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">Aditya Goel Investment</div><div style="font-size:1.1rem;font-weight:800;color:#3b82f6">₹20.60L</div><div style="font-size:.7rem;opacity:.5">22.5% of credits</div></div>
+      <div style="padding:.75rem;border-radius:10px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">Mahesh Doifode Invest.</div><div style="font-size:1.1rem;font-weight:800;color:#8b5cf6">₹6.90L</div><div style="font-size:.7rem;opacity:.5">7.5% of credits</div></div>
+      <div style="padding:.75rem;border-radius:10px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">Mooga Tech Solutions</div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">₹6.40L</div><div style="font-size:.7rem;opacity:.5">7.0% of credits</div></div>
+      <div style="padding:.75rem;border-radius:10px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">IT Refund (Income Tax)</div><div style="font-size:1.1rem;font-weight:800;color:#ec4899">₹2.26L</div><div style="font-size:.7rem;opacity:.5">2.5% of credits</div></div>
+      <div style="padding:.75rem;border-radius:10px;background:rgba(100,116,139,0.08);border:1px solid rgba(100,116,139,0.2)"><div style="font-size:.7rem;opacity:.6;margin-bottom:.2rem">BMW Refund / Other</div><div style="font-size:1.1rem;font-weight:800;color:#64748b">₹1.75L</div><div style="font-size:.7rem;opacity:.5">1.9% of credits</div></div>
+    </div>
   </div>
 </div>
 <!-- END BANK LEDGER -->
@@ -1723,7 +1771,7 @@ function initCashCharts() {
 }
 
 // ── Bank Ledger Charts ──
-var _bkCr, _bkDb, _bkBal;
+var _bkCr, _bkBal;
 function initBankCharts() {
   const dk = document.body.classList.contains('dark');
   const tc = dk ? '#e2e8f0' : '#1e293b';
@@ -1732,26 +1780,13 @@ function initBankCharts() {
   if (c1) {
     if (_bkCr) _bkCr.destroy();
     _bkCr = new Chart(c1, { type:'doughnut', data:{
-      labels:['Villa Rental','Aditya Invest','Mahesh Invest','Mooga Tech','IT Refund','BMW/Other'],
-      datasets:[{data:[5351075,2060000,690000,640000,226090,175442],
-        backgroundColor:['#10b981','#3b82f6','#8b5cf6','#f59e0b','#ec4899','#64748b'],
-        borderWidth:2, borderColor:dk?'#1e293b':'#fff'}]},
-      options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
-        plugins:{legend:{position:'right',labels:{color:tc,font:{size:10},padding:8,usePointStyle:true}},
+      labels:['Credit Cards','Director Draw','BMW EMI','Hiral Fee','Salaries','Car','GST','Legal','Repairs','Other'],
+      datasets:[{data:[3216667,1444000,1272519,945000,816218,355089,278142,191200,190000,417203],
+        backgroundColor:['#ef4444','#f97316','#f59e0b','#84cc16','#3b82f6','#06b6d4','#8b5cf6','#ec4899','#10b981','#64748b'],
+        borderWidth:2,borderColor:dk?'#1e293b':'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
+        plugins:{legend:{display:false},
           tooltip:{callbacks:{label:c=>' '+c.label+': ₹'+c.raw.toLocaleString('en-IN')}}}}
-    });
-  }
-  const c2 = document.getElementById('bankDebitChart');
-  if (c2) {
-    if (_bkDb) _bkDb.destroy();
-    _bkDb = new Chart(c2, { type:'bar', data:{
-      labels:['Cr Cards','Director','BMW EMI','Hiral Fee','Salaries','Car','GST','Legal','Maint','Other'],
-      datasets:[{label:'Amount',data:[3216667,1444000,1272519,945000,816218,355089,278142,191200,190000,417203],
-        backgroundColor:['#ef4444','#f97316','#f59e0b','#84cc16','#10b981','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#64748b'],borderRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' ₹'+c.raw.toLocaleString('en-IN')}}},
-        scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:9},callback:v=>'₹'+(v/100000).toFixed(1)+'L'}},
-          y:{grid:{display:false},ticks:{color:tc,font:{size:10}}}}}
     });
   }
   const c3 = document.getElementById('bankBalanceChart');
@@ -1768,7 +1803,6 @@ function initBankCharts() {
           y:{grid:{color:gc},ticks:{color:tc,font:{size:9},callback:v=>'₹'+(v/100000).toFixed(1)+'L'},beginAtZero:true}}}
     });
   }
-}
-</script>
+}</script>
 </body>
 </html>
